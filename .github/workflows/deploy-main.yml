@@ -1,0 +1,32 @@
+name: Upload to docker hub
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Descargar repositorio'
+        uses: actions/checkout@v3
+
+      - name: 'log docker'
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.COLOBARCO }}
+          password: ${{ secrets.CAVANI }}
+
+      - name: 'instalar dependencias'
+        run: npm ci
+
+      - name: 'build archivos js'
+        run: npm run build
+
+      - name: 'build y push de la imagen'
+        uses: docker/build-push-action@v4
+        with: 
+          context: .
+          push: true
+          tags: diegomaradona/soscampeondelmundo:latest
