@@ -21,9 +21,6 @@ jobs:
       - name: 'instalar dependencias'
         run: npm ci
 
-      - name: 'build archivos js'
-        run: npm run build
-
       - name: 'build y push de la imagen'
         uses: docker/build-push-action@v4
         with: 
